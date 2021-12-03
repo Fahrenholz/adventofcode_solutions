@@ -19,9 +19,7 @@ import (
 
 const instructionsURLTemplate = "https://adventofcode.com/2021/day/%d"
 const inputsURLTemplate = "https://adventofcode.com/2021/day/%d/input"
-const folderNameTmpl = "day%s"
-
-var days = []string{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twentyone", "twentytwo", "twentythree", "twentyfour", "twentyfive"}
+const folderNameTmpl = "day_%02d"
 
 func main() {
 	if len(os.Args) != 2 {
@@ -41,9 +39,8 @@ func main() {
 }
 
 func createFolder(daynum int) {
-	daystr := days[daynum]
-	_ = os.Mkdir(fmt.Sprintf(folderNameTmpl, daystr), 0775)
-	_, _ = copyFile("main_template.txt", fmt.Sprintf(folderNameTmpl+"/%s", daystr, "main.go"))
+	_ = os.Mkdir(fmt.Sprintf(folderNameTmpl, daynum), 0775)
+	_, _ = copyFile("main_template.txt", fmt.Sprintf(folderNameTmpl+"/%s", daynum, "main.go"))
 }
 
 func getInputs(daynum int) {
@@ -66,7 +63,7 @@ func getInputs(daynum int) {
 		log.Fatal(err)
 	}
 
-	err = os.WriteFile(fmt.Sprintf(folderNameTmpl+"/%s", days[daynum], "inputs.txt"), bod, 0664)
+	err = os.WriteFile(fmt.Sprintf(folderNameTmpl+"/%s", daynum, "inputs.txt"), bod, 0664)
 	if err != nil {
 		log.Fatal(err)
 	}
