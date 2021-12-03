@@ -5,5 +5,6 @@ days=(zero test two three four five six seven eight nine ten eleven twelve thirt
 
 mkdir "day${days[current]}"
 cp main_template.txt "day${days[current]}/main.go"
+touch "day${days[current]}/inputs.txt"
 
 
