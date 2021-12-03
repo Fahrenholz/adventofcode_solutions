@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"runtime"
 	"strconv"
 	"time"
 )
@@ -90,8 +91,17 @@ func getClientWithCookieJar() (http.Client, error) {
 
 func openBrowser(url string) {
 	var err error
-	err = exec.Command("xdg-open", url).Start()
 
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", url).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
