@@ -33,11 +33,11 @@ func main() {
 	gRate, _ := strconv.ParseInt(gammaRate, 2, 32)
 	eRate, _ := strconv.ParseInt(epsilonRate, 2, 32)
 
-	fmt.Printf("Gamma rate: %d, epsilon rate : %d, power consumption: %d\n", gRate, eRate, gRate*eRate)
+	fmt.Printf("Gamma rate: %d, epsilon rate: %d, power consumption: %d\n", gRate, eRate, gRate*eRate)
 
 	oxyRate, _ := strconv.ParseInt(recurseOxy(inputs, 0), 2, 64)
 	co2Rate, _ := strconv.ParseInt(recurseCo2(inputs, 0), 2, 64)
-	fmt.Printf("Oxygen generator rating: %d, CO2 scrubber rating: %d, life support rating :%d\n", oxyRate, co2Rate, oxyRate*co2Rate)
+	fmt.Printf("Oxygen generator rating: %d, CO2 scrubber rating: %d, life support rating: %d\n", oxyRate, co2Rate, oxyRate*co2Rate)
 }
 
 func getInputsByLine() []string {
