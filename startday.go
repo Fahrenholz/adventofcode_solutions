@@ -34,13 +34,13 @@ func main() {
 	}
 
 	openBrowser(fmt.Sprintf(instructionsURLTemplate, daynum))
-	createFolders(daynum)
+	createFolder(daynum)
 	time.Sleep(2 * time.Second)
 	getInputs(daynum)
 
 }
 
-func createFolders(daynum int) {
+func createFolder(daynum int) {
 	daystr := days[daynum]
 	_ = os.Mkdir(fmt.Sprintf(folderNameTmpl, daystr), 0775)
 	_, _ = copyFile("main_template.txt", fmt.Sprintf(folderNameTmpl+"/%s", daystr, "main.go"))
