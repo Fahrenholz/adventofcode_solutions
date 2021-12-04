@@ -11,6 +11,31 @@ import (
 func main() {
 	inputs := getInputsByLine()
 
+	draft, boards := parseInputs(inputs)
+
+	var winningScore int
+	lowerRound := len(draft) + 1
+	var upperRound int
+	var loosingBoardScore int
+
+	for _, b := range boards {
+		bingo, round, score := b.playDraft(draft)
+		if (bingo && lowerRound > round) || (bingo && lowerRound == round && winningScore < score) {
+			lowerRound = round
+			winningScore = score
+		}
+
+		if (bingo && upperRound < round) || (bingo && upperRound == round && loosingBoardScore > score) {
+			loosingBoardScore = score
+			upperRound = round
+		}
+	}
+
+	fmt.Printf("Winning score: %d\n", winningScore)
+	fmt.Printf("Loosing score: %d\n", loosingBoardScore)
+}
+
+func parseInputs(inputs []string) ([]int, []*bingoBoard) {
 	var draft []int
 	var buf []string
 	var boards []*bingoBoard
@@ -35,35 +60,7 @@ func main() {
 
 		buf = append(buf, v)
 	}
-
-	var winningScore int
-	lowerRound := len(draft) + 1
-	var upperRound int
-	var loosingBoardScore int
-
-	for _, b := range boards {
-		bingo, round, score := b.playDraft(draft)
-		if bingo && lowerRound > round {
-			lowerRound = round
-			winningScore = score
-		}
-
-		if bingo && lowerRound == round && winningScore < score {
-			winningScore = score
-		}
-
-		if bingo && upperRound < round {
-			loosingBoardScore = score
-			upperRound = round
-		}
-
-		if bingo && upperRound == round && loosingBoardScore > score {
-			loosingBoardScore = score
-		}
-	}
-
-	fmt.Printf("Winning score: %d\n", winningScore)
-	fmt.Printf("Loosing score: %d\n", loosingBoardScore)
+	return draft, boards
 }
 
 func parseNumberDraft(str string) []int {
