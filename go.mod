@@ -2,7 +2,10 @@ module gitlab.com/fahrenholz/adventOfCode
 
 go 1.17
 
-require github.com/zellyn/kooky v0.0.0-20210408152652-87b89e95f98f
+require (
+	github.com/go-test/deep v1.0.8
+	github.com/zellyn/kooky v0.0.0-20210408152652-87b89e95f98f
+)
 
 require (
 	github.com/bobesa/go-domain-util v0.0.0-20190911083921-4033b5f7dd89 // indirect
