@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -19,39 +20,29 @@ func main() {
 	totalFuel := 0
 
 	for _, v := range positions {
-		fuel := median - v
-
-		if fuel < 0 {
-			fuel = fuel * -1
-		}
-
-		totalFuel += fuel
+		totalFuel += int(math.Abs(float64(median - v)))
 	}
 
 	fmt.Printf("Solution 1 : Position: %d, Fuel: %d\n", median, totalFuel)
 
-	lowerPos := 0
+	// Solution 2
+	bestPos := 0
 	lowestFuel := 999999999999999999
 
 	for pos := positions[0]; pos < positions[len(positions)-1]; pos++ {
 		posFuel := 0
 		for _, v := range positions {
-			steps := pos - v
-
-			if steps < 0 {
-				steps = steps * -1
-			}
-
+			steps := int(math.Abs(float64(pos - v)))
 			posFuel += calcFuel(steps)
 		}
 
 		if posFuel < lowestFuel {
-			lowerPos = pos
+			bestPos = pos
 			lowestFuel = posFuel
 		}
 	}
 
-	fmt.Printf("Solution 1 : Position: %d, Fuel: %d\n", lowerPos, lowestFuel)
+	fmt.Printf("Solution 1 : Position: %d, Fuel: %d\n", bestPos, lowestFuel)
 }
 
 func calcFuel(steps int) int {
