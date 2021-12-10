@@ -13,6 +13,9 @@ github.com/go-test/deep
 # github.com/gonuts/binary v0.2.0
 ## explicit
 github.com/gonuts/binary
+# github.com/idealo/abs-billing v0.0.0-20211209170820-1209affa871c
+## explicit; go 1.17
+github.com/idealo/abs-billing/pkg/assert
 # github.com/zellyn/kooky v0.0.0-20210408152652-87b89e95f98f
 ## explicit; go 1.13
 github.com/zellyn/kooky
@@ -21,11 +24,11 @@ github.com/zellyn/kooky/internal
 github.com/zellyn/kooky/internal/firefox
 github.com/zellyn/kooky/internal/firefox/find
 github.com/zellyn/kooky/internal/utils
-# golang.org/x/net v0.0.0-20201031054903-ff519b6c9102
-## explicit; go 1.11
+# golang.org/x/net v0.0.0-20210917221730-978cfadd31cf
+## explicit; go 1.17
 golang.org/x/net/idna
-# golang.org/x/text v0.3.4
-## explicit; go 1.11
+# golang.org/x/text v0.3.7
+## explicit; go 1.17
 golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi

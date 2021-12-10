@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"github.com/idealo/abs-billing/pkg/assert"
+	"testing"
+)
 
 var testPatterns = parseInputs([]string{
 	"acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf",
@@ -22,11 +25,7 @@ func TestDecodeEntry(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			res := decodeEntry(tt.set)
 
-			if res != tt.exp {
-				t.Errorf("\tFAIL: expected %d got %d", tt.exp, res)
-			} else {
-				t.Logf("\tPASS: expected value returned")
-			}
+			assert.Eq(t, tt.exp, res, "should find equal four-digit-value")
 		})
 	}
 }
