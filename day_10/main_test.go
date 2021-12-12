@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/idealo/abs-billing/pkg/assert"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -22,8 +22,8 @@ func TestCorruptedStrings(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			res, compl := evalLines(tt.set)
 
-			assert.Eq(t, "", compl, "compl should be empty")
-			assert.Eq(t, tt.exp, res, "score should be as expected")
+			assert.Equal(t, "", compl, "compl should be empty")
+			assert.Equal(t, tt.exp, res, "score should be as expected")
 		})
 	}
 }
@@ -45,8 +45,8 @@ func TestIncompleteStrings(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			sc, res := evalLines(tt.set)
 
-			assert.Eq(t, 0, sc, "should have score to 0")
-			assert.Eq(t, tt.exp, res, "should have correct result")
+			assert.Equal(t, 0, sc, "should have score to 0")
+			assert.Equal(t, tt.exp, res, "should have correct result")
 		})
 	}
 }
@@ -75,7 +75,7 @@ func TestCalcCompletionScore(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			res := calcCompletionScore(tt.set)
 
-			assert.Eq(t, tt.exp, res, "should find the right score")
+			assert.Equal(t, tt.exp, res, "should find the right score")
 		})
 	}
 }
@@ -84,5 +84,5 @@ func TestFindMiddleScore(t *testing.T) {
 	scores := []int{288957, 5566, 1480781, 995444, 294}
 	res := findMiddleScore(scores)
 
-	assert.Eq(t, 288957, res, "should find correct middle score")
+	assert.Equal(t, 288957, res, "should find correct middle score")
 }

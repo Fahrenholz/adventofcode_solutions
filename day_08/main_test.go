@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/idealo/abs-billing/pkg/assert"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -24,25 +24,15 @@ func TestDecodeEntry(t *testing.T) {
 	for _, tt := range tts {
 		t.Run(tt.name, func(t *testing.T) {
 			res := decodeEntry(tt.set)
-
-			assert.Eq(t, tt.exp, res, "should find equal four-digit-value")
+			assert.Equal(t, tt.exp, res, "should find equal four-digit-value")
 		})
 	}
 }
 
 func TestContains(t *testing.T) {
 	res := contains("cdbaf", "ab")
-
-	if !res {
-		t.Errorf("\tFAIL: should be true")
-	} else {
-		t.Logf("\tPASS: expected value returned")
-	}
+	assert.True(t, res, "should find stringparts")
 
 	res2 := contains("cdfgeb", "ab")
-	if res2 {
-		t.Errorf("\tFAIL: should be false")
-	} else {
-		t.Logf("\tPASS: expected value returned")
-	}
+	assert.False(t, res2, "should not find stringparts")
 }
