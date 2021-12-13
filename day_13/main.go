@@ -21,7 +21,6 @@ type coordList struct {
 
 func main() {
 	grid, folds := getInputsByLine("./inputs.txt")
-	//_, _ = getInputsByLine("./inputs.txt")
 
 	for i, v := range folds {
 		switch v.direction {
