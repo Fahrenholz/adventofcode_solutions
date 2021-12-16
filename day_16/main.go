@@ -45,52 +45,40 @@ func operate(pkt Packet) int64 {
 			res += operate(spkt)
 		}
 	case 1: //product
-		for i, spkt := range pkt.subPackets {
-			if i == 0 {
-				res += operate(spkt)
-				continue
-			}
-			res = res * operate(spkt)
+		res = operate(pkt.subPackets[0])
+		for i := 1; i < len(pkt.subPackets); i++ {
+			res = res * operate(pkt.subPackets[i])
 		}
 	case 2: //min
-		for i, spkt := range pkt.subPackets {
-			if i == 0 {
-				res += operate(spkt)
-				continue
-			}
-			nv := operate(spkt)
+		res = operate(pkt.subPackets[0])
+		for i := 1; i < len(pkt.subPackets); i++ {
+			nv := operate(pkt.subPackets[i])
 			if res > nv {
 				res = nv
 			}
 		}
 	case 3: //max
-		for i, spkt := range pkt.subPackets {
-			if i == 0 {
-				res += operate(spkt)
-				continue
-			}
-			nv := operate(spkt)
+		res = operate(pkt.subPackets[0])
+		for i := 1; i < len(pkt.subPackets); i++ {
+			nv := operate(pkt.subPackets[i])
 			if res < nv {
 				res = nv
 			}
 		}
 	case 5: //gt
+		res = 0
 		if operate(pkt.subPackets[0]) > operate(pkt.subPackets[1]) {
 			res = 1
-		} else {
-			res = 0
 		}
 	case 6: //lt
+		res = 0
 		if operate(pkt.subPackets[0]) < operate(pkt.subPackets[1]) {
 			res = 1
-		} else {
-			res = 0
 		}
 	case 7: //eq
+		res = 0
 		if operate(pkt.subPackets[0]) == operate(pkt.subPackets[1]) {
 			res = 1
-		} else {
-			res = 0
 		}
 	}
 
