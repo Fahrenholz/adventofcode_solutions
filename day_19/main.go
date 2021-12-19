@@ -15,9 +15,9 @@ type scanner struct {
 }
 
 type normalizedScanner struct {
-	number           int
-	adjustmentToOrig coordinates
-	reports          []coordinates
+	number            int
+	relativePosToOrig coordinates
+	reports           []coordinates
 }
 
 func normalizeByOverlaps(sc scanner, compareTo *normalizedScanner) *normalizedScanner {
@@ -35,9 +35,9 @@ func normalizeByOverlaps(sc scanner, compareTo *normalizedScanner) *normalizedSc
 
 				if matches >= 12 {
 					return &normalizedScanner{
-						number:           sc.number,
-						adjustmentToOrig: coordinates{x: compareTo.adjustmentToOrig.x + possibleAdjustment.x, y: compareTo.adjustmentToOrig.y + possibleAdjustment.y, z: compareTo.adjustmentToOrig.z + possibleAdjustment.z},
-						reports:          axis,
+						number:            sc.number,
+						relativePosToOrig: coordinates{x: compareTo.relativePosToOrig.x + possibleAdjustment.x, y: compareTo.relativePosToOrig.y + possibleAdjustment.y, z: compareTo.relativePosToOrig.z + possibleAdjustment.z},
+						reports:           axis,
 					}
 				}
 			}
@@ -57,9 +57,9 @@ func main() {
 	inputs := parseInputs(getInputsByLine())
 
 	scanners := map[int]*normalizedScanner{0: {
-		number:           inputs[0].number,
-		adjustmentToOrig: coordinates{x: 0, y: 0, z: 0},
-		reports:          inputs[0].reports[0],
+		number:            inputs[0].number,
+		relativePosToOrig: coordinates{x: 0, y: 0, z: 0},
+		reports:           inputs[0].reports[0],
 	}}
 
 	for len(scanners) < len(inputs) {
@@ -83,7 +83,7 @@ func main() {
 	for i := range scanners {
 		v := scanners[i]
 		for _, rp := range v.reports {
-			coordsFromOrig := coordinates{x: rp.x + v.adjustmentToOrig.x, y: rp.y + v.adjustmentToOrig.y, z: rp.z + v.adjustmentToOrig.z}
+			coordsFromOrig := coordinates{x: rp.x + v.relativePosToOrig.x, y: rp.y + v.relativePosToOrig.y, z: rp.z + v.relativePosToOrig.z}
 			beacons[coordsFromOrig] = true
 		}
 
@@ -92,9 +92,9 @@ func main() {
 				continue
 			}
 
-			x := abs(scanners[osci].adjustmentToOrig.x - v.adjustmentToOrig.x)
-			y := abs(scanners[osci].adjustmentToOrig.y - v.adjustmentToOrig.y)
-			z := abs(scanners[osci].adjustmentToOrig.z - v.adjustmentToOrig.z)
+			x := abs(scanners[osci].relativePosToOrig.x - v.relativePosToOrig.x)
+			y := abs(scanners[osci].relativePosToOrig.y - v.relativePosToOrig.y)
+			z := abs(scanners[osci].relativePosToOrig.z - v.relativePosToOrig.z)
 
 			max := x + y + z
 			if maxManhattan < max {
