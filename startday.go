@@ -18,36 +18,39 @@ import (
 	"time"
 )
 
-const instructionsURLTemplate = "https://adventofcode.com/2021/day/%d"
-const inputsURLTemplate = "https://adventofcode.com/2021/day/%d/input"
-const folderNameTmpl = "day_%02d"
+const instructionsURLTemplate = "https://adventofcode.com/%d/day/%d"
+const inputsURLTemplate = "https://adventofcode.com/%d/day/%d/input"
+const folderNameTmpl = "%d/day_%02d"
 
 func main() {
-	if len(os.Args) != 2 {
-		log.Fatal("Wrong Parameter count. Usage: 'go run . <daynum>'")
+	if len(os.Args) != 3 {
+		log.Fatal("Wrong Parameter count. Usage: 'go run . <yearnum> <daynum>'")
 	}
 
-	daynum, err := strconv.Atoi(os.Args[1])
+	yearnum, err := strconv.Atoi(os.Args[1])
+
+	daynum, err := strconv.Atoi(os.Args[2])
 	if err != nil {
 		log.Fatal("could not parse daynum-parameter")
 	}
 
-	openBrowser(fmt.Sprintf(instructionsURLTemplate, daynum))
-	createFolder(daynum)
+	openBrowser(fmt.Sprintf(instructionsURLTemplate, yearnum, daynum))
+	createFolder(yearnum, daynum)
 	time.Sleep(2 * time.Second)
-	getInputs(daynum)
+	getInputs(yearnum, daynum)
 
 }
 
-func createFolder(daynum int) {
-	_ = os.Mkdir(fmt.Sprintf(folderNameTmpl, daynum), 0775)
-	_, _ = copyFile("main_template.txt", fmt.Sprintf(folderNameTmpl+"/%s", daynum, "main.go"))
+func createFolder(yearnum, daynum int) {
+	_ = os.Mkdir(fmt.Sprintf("%d", yearnum), 0775)
+	_ = os.Mkdir(fmt.Sprintf(folderNameTmpl, yearnum, daynum), 0775)
+	_, _ = copyFile("main_template.txt", fmt.Sprintf(folderNameTmpl+"/%s", yearnum, daynum, "main.go"))
 }
 
-func getInputs(daynum int) {
+func getInputs(yearnum, daynum int) {
 	cl, err := getClientWithCookieJar()
 
-	rq, err := http.NewRequestWithContext(context.Background(), http.MethodGet, fmt.Sprintf(inputsURLTemplate, daynum), nil)
+	rq, err := http.NewRequestWithContext(context.Background(), http.MethodGet, fmt.Sprintf(inputsURLTemplate, yearnum, daynum), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -64,7 +67,7 @@ func getInputs(daynum int) {
 		log.Fatal(err)
 	}
 
-	err = os.WriteFile(fmt.Sprintf(folderNameTmpl+"/%s", daynum, "inputs.txt"), bod, 0664)
+	err = os.WriteFile(fmt.Sprintf(folderNameTmpl+"/%s", yearnum, daynum, "inputs.txt"), bod, 0664)
 	if err != nil {
 		log.Fatal(err)
 	}
