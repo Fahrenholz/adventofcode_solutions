@@ -8,6 +8,8 @@ import (
 
 func main() {
     inputs := getInputsByLine()
+
+    fmt.Println(inputs)
 }
 
 func getInputsByLine() []string {
