@@ -4,9 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/zellyn/kooky"
-	_ "github.com/zellyn/kooky/firefox"
+	_ "github.com/zellyn/kooky/browser/all"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/cookiejar"
@@ -62,7 +61,7 @@ func getInputs(yearnum, daynum int) {
 
 	defer rp.Body.Close()
 
-	bod, err := ioutil.ReadAll(rp.Body)
+	bod, err := io.ReadAll(rp.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -85,8 +84,7 @@ func getClientWithCookieJar() (http.Client, error) {
 		log.Fatal(err)
 	}
 
-	cook := cookies[0].HTTPCookie()
-	jar.SetCookies(cookieUrl, []*http.Cookie{&cook})
+	jar.SetCookies(cookieUrl, []*http.Cookie{&cookies[0].Cookie})
 	cl := http.Client{Jar: jar}
 
 	return cl, err
