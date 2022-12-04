@@ -96,6 +96,16 @@ func MapToSlice[K comparable, T any](vals map[K]T) []T {
 	return res
 }
 
+func MapKeysToSlice[K comparable, T any](vals map[K]T) []K {
+	var res []K
+
+	for v, _ := range vals {
+		res = append(res, v)
+	}
+
+	return res
+}
+
 func MaxScore[T any](vals []T, score func(elem T) int) T {
 	var max int
 	var maxElem T
@@ -110,6 +120,25 @@ func MaxScore[T any](vals []T, score func(elem T) int) T {
 	}
 
 	return maxElem
+}
+
+func GroupNItems[T any](vals []T, n int) [][]T {
+	var res [][]T
+
+	tmp := []T{}
+
+	for i, v := range vals {
+		if i != 0 && i%n == 0 {
+			res = append(res, tmp)
+			tmp = []T{}
+		}
+
+		tmp = append(tmp, v)
+	}
+
+	res = append(res, tmp)
+
+	return res
 }
 
 func Max(vals []int) int {
