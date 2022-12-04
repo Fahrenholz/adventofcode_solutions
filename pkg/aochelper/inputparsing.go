@@ -43,7 +43,7 @@ func GetInputAsLinesOfInts() []int {
 	return inputs
 }
 
-func GetInputsAsLinesOfCharSlices(delimiter string) [][]string {
+func GetInputsAsLinesOfStringSlices(delimiter string) [][]string {
 	inputFile := GetFileHandle()
 	defer inputFile.Close()
 
