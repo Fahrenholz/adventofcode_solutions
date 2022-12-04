@@ -1,35 +1,87 @@
 package aochelper
 
-func Sum(sl []int) int {
+func SumScore[T any](vals []T, score func(elem T) int) int {
 	var sum int
 
-	for i, _ := range sl {
-		sum += sl[i]
+	for i, _ := range vals {
+		sum += score(vals[i])
 	}
 
 	return sum
 }
 
-func Max(sl []int) int {
-	var max int
+func Filter[T any](sl []T, cond func(i int) bool) []T {
+	var res []T
 
 	for i, _ := range sl {
-		if sl[i] > max {
-			max = sl[i]
+		if cond(i) {
+			res = append(res, sl[i])
 		}
 	}
 
-	return max
+	return res
 }
 
-func Min(sl []int) int {
-	min := sl[0]
+func FilterMap[K comparable, T any](vals map[K]T, cond func(key K) bool) map[K]T {
+	res := make(map[K]T)
 
-	for i := 1; i < len(sl); i++ {
-		if sl[i] < min {
-			min = sl[i]
+	for k, _ := range vals {
+		if cond(k) {
+			res[k] = vals[k]
 		}
 	}
 
-	return min
+	return res
+}
+
+func SliceToMap[T comparable](vals []T) map[T]bool {
+	res := make(map[T]bool)
+
+	for _, v := range vals {
+		res[v] = true
+	}
+
+	return res
+}
+
+func MapToSlice[K comparable, T any](vals map[K]T) []T {
+	var res []T
+
+	for _, v := range vals {
+		res = append(res, v)
+	}
+
+	return res
+}
+
+func MaxScore[T any](vals []T, score func(elem T) int) T {
+	var max int
+	var maxElem T
+
+	for i, _ := range vals {
+		curr := score(vals[i])
+
+		if curr > max {
+			max = curr
+			maxElem = vals[i]
+		}
+	}
+
+	return maxElem
+}
+
+func MinScore[T any](vals []T, score func(elem T) int) T {
+	var min int
+	var minElem T
+
+	for i, _ := range vals {
+		curr := score(vals[i])
+
+		if curr < min {
+			min = curr
+			minElem = vals[i]
+		}
+	}
+
+	return minElem
 }
