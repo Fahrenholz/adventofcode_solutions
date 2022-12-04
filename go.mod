@@ -1,4 +1,4 @@
-module gitlab.com/fahrenholz/adventOfCode
+module github.com/fahrenholz/adventOfCode
 
 go 1.17
 
