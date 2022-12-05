@@ -14,7 +14,19 @@ func Sum(vals []int) int {
 	return SumScore(vals, func(elem int) int { return elem })
 }
 
-func Filter[T any](sl []T, cond func(i int) bool) []T {
+func Filter[T any](vars []T, f func(el T) bool) []T {
+	var res []T
+
+	for _, v := range vars {
+		if f(v) {
+			res = append(res, v)
+		}
+	}
+
+	return res
+}
+
+func FilterWithIndex[T any](sl []T, cond func(i int) bool) []T {
 	var res []T
 
 	for i, _ := range sl {
@@ -38,6 +50,16 @@ func FilterMap[K comparable, T any](vals map[K]T, cond func(key K) bool) map[K]T
 	return res
 }
 
+func Reverse[T any](vals []T) []T {
+	res := make([]T, len(vals))
+
+	for i := 0; i < len(vals); i++ {
+		res[i] = vals[len(vals)-1-i]
+	}
+
+	return res
+}
+
 func Map[T, U any](vals []T, f func(T) U) []U {
 	var res []U
 
@@ -48,7 +70,7 @@ func Map[T, U any](vals []T, f func(T) U) []U {
 	return res
 }
 
-func MapMap[K comparable, T, U any](vals map[K]T, f func(T) U) map[K]U {
+func MapToMap[K comparable, T, U any](vals map[K]T, f func(T) U) map[K]U {
 	res := make(map[K]U)
 
 	for i, v := range vals {
@@ -56,6 +78,12 @@ func MapMap[K comparable, T, U any](vals map[K]T, f func(T) U) map[K]U {
 	}
 
 	return res
+}
+
+func Walk[T any](vals []T, f func(T)) {
+	for _, v := range vals {
+		f(v)
+	}
 }
 
 func Reduce[T, U any](vals []T, init U, f func(U, T) U) U {
