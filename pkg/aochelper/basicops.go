@@ -174,13 +174,13 @@ func Max(vals []int) int {
 }
 
 func MinScore[T any](vals []T, score func(elem T) int) T {
-	var min int
+	min := score(MaxScore(vals, score))
 	var minElem T
 
 	for i, _ := range vals {
 		curr := score(vals[i])
 
-		if curr < min {
+		if curr <= min {
 			min = curr
 			minElem = vals[i]
 		}
@@ -191,4 +191,32 @@ func MinScore[T any](vals []T, score func(elem T) int) T {
 
 func Min(vals []int) int {
 	return MinScore(vals, func(elem int) int { return elem })
+}
+
+func MaxIdx(vals []int, lastIdx bool) int {
+	var max, maxIdx int
+
+	for i, _ := range vals {
+		if vals[i] > max {
+			max = vals[i]
+			maxIdx = i
+		}
+		if vals[i] == max && lastIdx {
+			max = vals[i]
+			maxIdx = i
+		}
+	}
+
+	return maxIdx
+}
+
+func Flip[T any](vals [][]T) [][]T {
+	res := make([][]T, len(vals[0]))
+	for j, _ := range vals[0] {
+		for i, _ := range vals {
+			res[j] = append(res[j], vals[i][j])
+		}
+	}
+
+	return res
 }
