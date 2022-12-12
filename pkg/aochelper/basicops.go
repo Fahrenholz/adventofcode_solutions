@@ -220,3 +220,10 @@ func Flip[T any](vals [][]T) [][]T {
 
 	return res
 }
+
+func Abs(my int) int {
+	if my < 0 {
+		return my * -1
+	}
+	return my
+}
